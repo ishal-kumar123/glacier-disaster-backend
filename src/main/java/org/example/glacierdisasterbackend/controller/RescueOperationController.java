@@ -16,6 +16,7 @@ public class RescueOperationController {
 
     public RescueOperationController(
             RescueOperationService rescueOperationService) {
+
         this.rescueOperationService = rescueOperationService;
     }
 
@@ -28,11 +29,30 @@ public class RescueOperationController {
         );
     }
 
+    @PostMapping("/assign")
+    public ResponseEntity<RescueOperation> assignRescueOperation(
+            @RequestBody RescueOperation operation) {
+
+        return ResponseEntity.ok(
+                rescueOperationService.createRescueOperation(operation)
+        );
+    }
+
     @GetMapping
     public ResponseEntity<List<RescueOperation>> getAllRescueOperations() {
 
         return ResponseEntity.ok(
                 rescueOperationService.getAllRescueOperations()
+        );
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<RescueOperation> updateStatus(
+            @PathVariable String id,
+            @RequestParam String status) {
+
+        return ResponseEntity.ok(
+                rescueOperationService.updateStatus(id, status)
         );
     }
 }
